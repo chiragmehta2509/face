@@ -1,7 +1,8 @@
 streamlit>=1.32.0
-dlib==19.24.6
-face_recognition
+deepface
+tf-keras
 numpy
 Pillow
 google-api-python-client
 google-auth
+opencv-python-headless
