@@ -5,4 +5,4 @@ numpy
 Pillow
 google-api-python-client
 google-auth
-opencv-python-headless==4.8.1.78
+opencv-python-headless
