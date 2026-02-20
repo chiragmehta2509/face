@@ -25,7 +25,7 @@ st.markdown("Take a selfie and find your photos from the Drive folder!")
 # ─────────────────────────────────────────────
 #  CONSTANTS – edit these two lines
 # ─────────────────────────────────────────────
-DRIVE_FOLDER_ID = "YOUR_GOOGLE_DRIVE_FOLDER_ID"   # <-- paste your folder ID here
+DRIVE_FOLDER_ID = "0B_yhaGhzavnuS0twM2xQNUdwTDQ"   # <-- paste your folder ID here
 ENCODINGS_CACHE = "face_encodings_cache.pkl"       # cache so Drive isn't re-scanned every time
 
 
