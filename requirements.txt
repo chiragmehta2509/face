@@ -1,8 +1,8 @@
 streamlit>=1.32.0
-deepface
+deepface==0.0.93
 tf-keras
 numpy
 Pillow
 google-api-python-client
 google-auth
-opencv-python-headless
+opencv-python-headless==4.8.1.78
