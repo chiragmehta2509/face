@@ -1,7 +1,8 @@
 streamlit>=1.32.0
+tensorflow-cpu==2.15.0
+tf-keras==2.15.1
 deepface==0.0.93
-tf-keras
-numpy
+numpy<2.0
 Pillow
 google-api-python-client
 google-auth
