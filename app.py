@@ -24,10 +24,10 @@ st.markdown("Take a selfie and find your photos from the Drive folder!")
 # ─────────────────────────────────────────────
 #  CONSTANTS — paste your Drive folder ID below
 # ─────────────────────────────────────────────
-DRIVE_FOLDER_ID = "0B_yhaGhzavnuS0twM2xQNUdwTDQ"
-ENCODINGS_CACHE = "face_encodings_cache.pkl"
-MODEL_NAME      = "Facenet"   # fast & accurate
-DETECTOR        = "opencv"    # fastest, no extra install needed
+DRIVE_FOLDER_ID = "YOUR_GOOGLE_DRIVE_FOLDER_ID"
+ENCODINGS_CACHE = "/tmp/face_encodings_cache.pkl"
+MODEL_NAME      = "Facenet"
+DETECTOR        = "opencv"
 
 
 # ─────────────────────────────────────────────
@@ -35,21 +35,37 @@ DETECTOR        = "opencv"    # fastest, no extra install needed
 # ─────────────────────────────────────────────
 @st.cache_resource(show_spinner="Connecting to Google Drive…")
 def get_drive_service():
-    try:
-        creds_dict = dict(st.secrets["google_service_account"])
+    SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
+
+    # Try Streamlit Cloud secrets first
+    if "google_service_account" in st.secrets:
         creds = service_account.Credentials.from_service_account_info(
-            creds_dict,
-            scopes=["https://www.googleapis.com/auth/drive.readonly"]
+            st.secrets["google_service_account"],
+            scopes=SCOPES
         )
-    except Exception:
-        if not os.path.exists("credentials.json"):
-            st.error("❌ credentials.json not found. See README for setup.")
-            st.stop()
+        return build("drive", "v3", credentials=creds)
+
+    # Fallback to local credentials.json
+    if os.path.exists("credentials.json"):
         creds = service_account.Credentials.from_service_account_file(
             "credentials.json",
-            scopes=["https://www.googleapis.com/auth/drive.readonly"]
+            scopes=SCOPES
         )
-    return build("drive", "v3", credentials=creds)
+        return build("drive", "v3", credentials=creds)
+
+    # Neither found — show clear instructions
+    st.error("""
+    ❌ Google credentials not found!
+
+    **If you are on Streamlit Cloud:**
+    - Go to your app → ⋮ menu → Settings → Secrets
+    - Make sure your secrets start with `[google_service_account]`
+    - Click Save and wait for the app to restart
+
+    **If running locally:**
+    - Place `credentials.json` in the same folder as `app.py`
+    """)
+    st.stop()
 
 
 def list_images_in_folder(service, folder_id):
@@ -86,7 +102,6 @@ def download_image(service, file_id):
 
 
 def get_embedding(img: Image.Image):
-    """Return face embedding using DeepFace, or None if no face found."""
     try:
         path = "/tmp/face_input.jpg"
         img.save(path, format="JPEG")
