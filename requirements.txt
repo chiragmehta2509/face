@@ -1,4 +1,5 @@
 streamlit>=1.32.0
+dlib==19.24.6
 face_recognition
 numpy
 Pillow
