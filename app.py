@@ -24,7 +24,7 @@ st.markdown("Take a selfie and find your photos from the Drive folder!")
 # ─────────────────────────────────────────────
 #  CONSTANTS — paste your Drive folder ID below
 # ─────────────────────────────────────────────
-DRIVE_FOLDER_ID = "YOUR_GOOGLE_DRIVE_FOLDER_ID"
+DRIVE_FOLDER_ID = "0B_yhaGhzavnuS0twM2xQNUdwTDQ"
 ENCODINGS_CACHE = "/tmp/face_encodings_cache.pkl"
 MODEL_NAME      = "Facenet"
 DETECTOR        = "opencv"
